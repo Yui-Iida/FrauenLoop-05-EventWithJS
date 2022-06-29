@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events</title>
+  <!-- Below: define two classes that will be dynamically assigned in event handlers -->
+  <style>
+    .green {
+      background-color: aquamarine;
+    }
+    .smallText {
+      font-size: xx-small;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- two ways to define a button element: as <button> tag -->
+  <button onclick="logEvent(event)">Click me to add text content</button>
+  <!-- or as input of type button tag -->
+  <input type="button" value="Click me to reset paragraph value">
+  <button id="backgroundColorButton" onclick="handleBackgroundColorChange">Click to change background-color</button>
+  <p></p>
+  <script>
+    function logEvent(event) {
+      console.log(event.target);
+    }
+    // querySelector is one way to access an element in the DOM
+    const paragraph = document.querySelector('p');
+    
+    const button = document.querySelector('button');
+    // you always call the addEventListener method on a particular element!
+    // the first argument to that method is the name of the event
+    // the second argument is a callback function that will be called once the event happens
+    button.addEventListener('click', event => {
+      paragraph.innerText = 'Hello Frauenloop!';
+    });
+
+    const resetButton = document.querySelector('input');
+    resetButton.addEventListener('dblclick', () => {
+      paragraph.innerText = "";
+    })
+
+    function handleBackgroundColorChange() {
+      const body = document.querySelector('body');
+      // to add a class to a list of classes:
+      body.classList.add("green");
+      body.classList.add("smallText");
+
+      // or you can assign one classname to the element:
+      // body.className = 'green';
+
+      // or you can add an inline style to that element:
+      // body.style.backgroundColor = "green";
+    }
+
+    // the two lines below produce identical result:
+    const backgroundColorButton = document.getElementById('backgroundColorButton');
+    // const backgroundColorButton = document.querySelector('button#backgroundColorButton');
+    // to handle a keyboard keydown event:
+    backgroundColorButton.addEventListener('keydown', (event) => {
+      handleBackgroundColorChange();
+    })
+    // to handle a mouse (=pointer) click event:
+    backgroundColorButton.addEventListener('click', (event) => {
+      handleBackgroundColorChange();
+    })
+  </script>
+</body>
+
+</html>
